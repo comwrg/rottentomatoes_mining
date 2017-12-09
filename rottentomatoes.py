@@ -75,19 +75,22 @@ class Rottentomatoes:
         :type score: str
         :return: str
         """
-        score = (score
-            .replace('\n', '')
-            .replace(' ', '')
-            .replace('|OriginalScore:', ''))
-        if score.find('/') > 0:
-            # found `/`
-            # calculate score
-            score = eval(score)
-            score = '%.2f' % (score)
-        else:
-            # not found `/`
-            score = Rottentomatoes.nominal2per(score)
-        return score
+        try:
+            score = (score
+                .replace('\n', '')
+                .replace(' ', '')
+                .replace('|OriginalScore:', ''))
+            if score.find('/') > 0:
+                # found `/`
+                # calculate score
+                score = eval(score)
+                score = '%.2f' % (score)
+            else:
+                # not found `/`
+                score = Rottentomatoes.nominal2per(score)
+            return score
+        except:
+            return None
 
     @staticmethod
     def nominal2per(nominal):
